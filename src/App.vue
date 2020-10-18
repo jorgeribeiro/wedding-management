@@ -1,16 +1,18 @@
 <template>
   <v-app>
-    <v-app-bar
-      color="#00BFA5"
-      dark
-      flat
-    >
-      <v-toolbar-title>Jorge & Sammyra ⛪</v-toolbar-title>
-    </v-app-bar>
-
     <v-navigation-drawer
-        permanent
+      v-model="drawer"
+      app
     >
+      <v-sheet
+        color="#00BFA5"
+        dark
+        class="pa-4"
+      >
+        <div>⛪ Jorge & Sammyra</div>
+      </v-sheet>
+
+      <v-divider></v-divider>
       <v-list
         dense
         rounded
@@ -30,6 +32,14 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+    <v-main>
+      <v-container
+        class="py-8 px-6"
+        fluid
+      >
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
