@@ -1,27 +1,13 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <v-sheet
-        color="#00BFA5"
-        dark
-        class="pa-4"
-      >
+    <v-navigation-drawer app>
+      <v-sheet color="#00BFA5" dark class="pa-4">
         <div>⛪ Jorge & Sammyra</div>
       </v-sheet>
 
       <v-divider></v-divider>
-      <v-list
-        dense
-        rounded
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-        >
+      <v-list dense rounded>
+        <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -34,24 +20,29 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-container
-        class="py-8 px-6"
-        fluid
-      >
+      <v-container class="py-8 px-6" fluid>
+        <InvitationsTable />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        items: [
-          { title: 'Listar convites', icon: 'mdi-format-list-bulleted-square' },
-          { title: 'Adicionar convites', icon: 'mdi-account-multiple-plus' },
-        ],
-      }
-    },
-  }
+import InvitationsTable from "./components/InvitationsTable";
+
+export default {
+  name: "App",
+  components: {
+    InvitationsTable,
+  },
+
+  data() {
+    return {
+      items: [
+        { title: "Listar convites", icon: "mdi-format-list-bulleted-square" },
+        { title: "Adicionar convites", icon: "mdi-account-multiple-plus" },
+      ],
+    };
+  },
+};
 </script>
