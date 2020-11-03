@@ -2,56 +2,66 @@
   <v-data-table
     :headers="headers"
     :items="invitations"
-    :expanded.sync="expanded"
     item-key="invitationCode"
-    show-expand
     class="elevation-1"
   >
     <template v-slot:[`item.family`]="{ item }">
       {{ getFamilySize(item.family) }}
     </template>
 
-    <template v-slot:[`expanded-item`]="{ headers, item }">
-      <td></td>
-      <td :colspan="headers.length">
-        {{ getFamily(item.family) }}
-      </td>
+    <template v-slot:[`item.name`]="{ item }">
+      {{ getFamilyName(item.family) }}
     </template>
+
+    <template v-slot:[`item.checkFamily`]>
+      <v-icon small class="mr-2" @click.stop="showModal = true">
+        mdi-eye
+      </v-icon>
+    </template>
+
+    <FamilyModal v-model="showModal" />
   </v-data-table>
 </template>
 
 <script>
 import axios from "axios";
 
+import FamilyModal from "./FamilyModal";
+
 export default {
   name: "InvitationsTable",
+  components: {
+    FamilyModal,
+  },
 
   data() {
     return {
       headers: [
         {
-          text: "Codigo",
+          text: "Código",
           value: "invitationCode",
         },
         {
-          text: "Numero de convidados",
+          text: "Nome",
+          value: "name",
+        },
+        {
+          text: "Número de convidados",
           value: "family",
         },
         {
-          text: "Data confirmacao",
+          text: "Data confirmação",
           value: "presenceConfirmedOn",
-        },
-        {
-          text: "Data atualizacao confirmacao",
-          value: "presenceConfirmationUpdatedOn",
         },
         {
           text: "Mensagem",
           value: "presenceConfirmedMessage",
         },
+        { text: "Convidados", value: "checkFamily" },
       ],
       invitations: [],
       expanded: [],
+      showModal: false,
     };
   },
 
@@ -66,14 +76,8 @@ export default {
       return family.length;
     },
 
-    getFamily(family) {
-      let formattedFamily = "";
-
-      family.forEach((element) => {
-        formattedFamily += element.name + " " + element.presenceConfirmed + " / ";
-      });
-
-      return formattedFamily;
+    getFamilyName(family) {
+      return family[0].name;
     },
   },
 };
