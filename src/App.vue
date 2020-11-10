@@ -7,7 +7,12 @@
 
       <v-divider></v-divider>
       <v-list dense rounded>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.route"
+          link
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -21,26 +26,29 @@
 
     <v-main>
       <v-container class="py-8 px-6" fluid>
-        <InvitationsTable />
+        <router-view/>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import InvitationsTable from "./components/InvitationsTable";
-
 export default {
   name: "App",
-  components: {
-    InvitationsTable,
-  },
 
   data() {
     return {
       items: [
-        { title: "Listar convites", icon: "mdi-format-list-bulleted-square" },
-        { title: "Adicionar convites", icon: "mdi-account-multiple-plus" },
+        {
+          title: "Listar convites",
+          icon: "mdi-format-list-bulleted-square",
+          route: "/",
+        },
+        {
+          title: "Adicionar convites",
+          icon: "mdi-account-multiple-plus",
+          route: "/add-invitations",
+        },
       ],
     };
   },
