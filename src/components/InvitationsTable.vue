@@ -3,6 +3,8 @@
     :headers="headers"
     :items="invitations"
     item-key="invitationCode"
+    :loading="isLoading"
+    loading-text="Carregando convites..."
     class="elevation-1"
   >
     <template v-slot:[`item.family`]="{ item }">
@@ -22,9 +24,7 @@
     </template>
 
     <template v-slot:[`item.checkFamily`]>
-      <v-icon small class="mr-2">
-        mdi-eye
-      </v-icon>
+      <v-icon small class="mr-2"> mdi-eye </v-icon>
     </template>
   </v-data-table>
 </template>
@@ -63,12 +63,14 @@ export default {
       invitations: [],
       expanded: [],
       showModal: false,
+      isLoading: true,
     };
   },
 
   created() {
     axios.get(process.env.VUE_APP_API_URL + "/invitations").then((response) => {
       this.invitations = response.data;
+      this.isLoading = false;
     });
   },
 
@@ -84,9 +86,9 @@ export default {
 
   filters: {
     formatNull: function (value) {
-      if (!value) return '-';
+      if (!value) return "-";
       return value;
-    }
-  }
+    },
+  },
 };
 </script>
