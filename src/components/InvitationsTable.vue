@@ -24,8 +24,25 @@
     </template>
 
     <template v-slot:[`item.checkFamily`]>
-      <v-icon small class="mr-2"> mdi-eye </v-icon>
+      <v-icon small class="mr-2" @click="viewFamily"> mdi-eye </v-icon>
     </template>
+
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Convidados</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-container> </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="close"> Fechar </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-data-table>
 </template>
 
@@ -61,8 +78,7 @@ export default {
         { text: "Convidados", value: "checkFamily" },
       ],
       invitations: [],
-      expanded: [],
-      showModal: false,
+      dialog: false,
       isLoading: true,
     };
   },
@@ -74,6 +90,12 @@ export default {
     });
   },
 
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+  },
+
   methods: {
     getFamilySize(family) {
       return family.length;
@@ -81,6 +103,15 @@ export default {
 
     getFamilyName(family) {
       return family[0].name;
+    },
+
+    viewFamily() {
+      this.dialog = true;
+      console.log(this.dialog);
+    },
+
+    close() {
+      this.dialog = false;
     },
   },
 
