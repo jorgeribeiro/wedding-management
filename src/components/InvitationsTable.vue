@@ -13,26 +13,27 @@
       {{ getFamilyName(item.family) }}
     </template>
 
+    <template v-slot:[`item.presenceConfirmedOn`]="{ item }">
+      {{ item.presenceConfirmedOn | formatNull }}
+    </template>
+
+    <template v-slot:[`item.presenceConfirmedMessage`]="{ item }">
+      {{ item.presenceConfirmedMessage | formatNull }}
+    </template>
+
     <template v-slot:[`item.checkFamily`]>
-      <v-icon small class="mr-2" @click.stop="showModal = true">
+      <v-icon small class="mr-2">
         mdi-eye
       </v-icon>
     </template>
-
-    <FamilyModal v-model="showModal" />
   </v-data-table>
 </template>
 
 <script>
 import axios from "axios";
 
-import FamilyModal from "./FamilyModal";
-
 export default {
   name: "InvitationsTable",
-  components: {
-    FamilyModal,
-  },
 
   data() {
     return {
@@ -66,7 +67,7 @@ export default {
   },
 
   created() {
-    axios.get("http://localhost:5000/api/v1/invitations").then((response) => {
+    axios.get(process.env.VUE_APP_API_URL + "/invitations").then((response) => {
       this.invitations = response.data;
     });
   },
@@ -80,5 +81,12 @@ export default {
       return family[0].name;
     },
   },
+
+  filters: {
+    formatNull: function (value) {
+      if (!value) return '-';
+      return value;
+    }
+  }
 };
 </script>
