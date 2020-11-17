@@ -107,7 +107,6 @@ export default {
 
     viewFamily() {
       this.dialog = true;
-      console.log(this.dialog);
     },
 
     close() {
