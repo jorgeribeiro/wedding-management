@@ -41,8 +41,13 @@ export default {
           label: "Nome #1",
           value: "",
         },
+        {
+          id: "name2",
+          label: "Nome #2",
+          value: "",
+        },
       ],
-      numberOfTextFields: 1,
+      numberOfTextFields: 2,
       showRemoveButton: false,
       nameRules: [(v) => !!v || "Campo obrigatório"],
     };
