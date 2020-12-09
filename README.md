@@ -1,24 +1,5 @@
-# wedding-management
+# Wedding Management
+Project built with Vue.js to manage wedding invitations. It communicates with the API built [in this project](https://github.com/jorgeribeiro/wedding-rsvp).
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Components
+I used the [Vuetify Design Framework](https://vuetifyjs.com/en/) to design the views in the project.
