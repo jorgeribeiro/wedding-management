@@ -1,49 +1,53 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="invitations"
-    item-key="invitationCode"
-    :loading="isLoading"
-    loading-text="Carregando convites..."
-    class="elevation-1"
-  >
-    <template v-slot:[`item.family`]="{ item }">
-      {{ getFamilySize(item.family) }}
-    </template>
+  <div>
+    <span>Número total de convidados: {{ totalInvited }}</span><br><br>
 
-    <template v-slot:[`item.name`]="{ item }">
-      {{ getFamilyName(item.family) }}
-    </template>
+    <v-data-table
+      :headers="headers"
+      :items="invitations"
+      item-key="invitationCode"
+      :loading="isLoading"
+      loading-text="Carregando convites..."
+      class="elevation-1"
+    >
+      <template v-slot:[`item.family`]="{ item }">
+        {{ getFamilySize(item.family) }}
+      </template>
 
-    <template v-slot:[`item.presenceConfirmedOn`]="{ item }">
-      {{ item.presenceConfirmedOn | formatNull }}
-    </template>
+      <template v-slot:[`item.name`]="{ item }">
+        {{ getFamilyName(item.family) }}
+      </template>
 
-    <template v-slot:[`item.presenceConfirmedMessage`]="{ item }">
-      {{ item.presenceConfirmedMessage | formatNull }}
-    </template>
+      <template v-slot:[`item.presenceConfirmedOn`]="{ item }">
+        {{ item.presenceConfirmedOn | formatNull }}
+      </template>
 
-    <template v-slot:[`item.checkFamily`]>
-      <v-icon small class="mr-2" @click="viewFamily"> mdi-eye </v-icon>
-    </template>
+      <template v-slot:[`item.presenceConfirmedMessage`]="{ item }">
+        {{ item.presenceConfirmedMessage | formatNull }}
+      </template>
 
-    <v-dialog v-model="dialog" max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">Convidados</span>
-        </v-card-title>
+      <template v-slot:[`item.checkFamily`]>
+        <v-icon small class="mr-2" @click="viewFamily"> mdi-eye </v-icon>
+      </template>
 
-        <v-card-text>
-          <v-container> </v-container>
-        </v-card-text>
+      <v-dialog v-model="dialog" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Convidados</span>
+          </v-card-title>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="close"> Fechar </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-data-table>
+          <v-card-text>
+            <v-container> </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="close"> Fechar </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -77,6 +81,7 @@ export default {
         },
         { text: "Convidados", value: "checkFamily" },
       ],
+      totalInvited: null,
       invitations: [],
       dialog: false,
       isLoading: true,
@@ -85,7 +90,8 @@ export default {
 
   created() {
     axios.get(process.env.VUE_APP_API_URL + "/invitations").then((response) => {
-      this.invitations = response.data;
+      this.totalInvited = response.data.totalInvited;
+      this.invitations = response.data.invitations;
       this.isLoading = false;
     });
   },
