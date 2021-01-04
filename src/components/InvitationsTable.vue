@@ -1,6 +1,7 @@
 <template>
   <div>
-    <span>Número total de convidados: {{ totalInvited }}</span><br><br>
+    <span>Número total de convidados: {{ totalInvited }}</span
+    ><br /><br />
 
     <v-data-table
       :headers="headers"
@@ -10,12 +11,12 @@
       loading-text="Carregando convites..."
       class="elevation-1"
     >
-      <template v-slot:[`item.family`]="{ item }">
-        {{ getFamilySize(item.family) }}
-      </template>
-
       <template v-slot:[`item.name`]="{ item }">
         {{ getFamilyName(item.family) }}
+      </template>
+
+      <template v-slot:[`item.family`]="{ item }">
+        {{ getFamilySize(item.family) }}
       </template>
 
       <template v-slot:[`item.presenceConfirmedOn`]="{ item }">
@@ -26,27 +27,45 @@
         {{ item.presenceConfirmedMessage | formatNull }}
       </template>
 
-      <template v-slot:[`item.checkFamily`]>
-        <v-icon small class="mr-2" @click="viewFamily"> mdi-eye </v-icon>
+      <template v-slot:[`item.checkInvitedList`]="{ item }">
+        <v-icon
+          small
+          class="mr-2"
+          @click.stop="dialog = true"
+          @click="getInvitedList(item.family)"
+        >
+          mdi-eye
+        </v-icon>
       </template>
-
-      <v-dialog v-model="dialog" max-width="500px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Convidados</span>
-          </v-card-title>
-
-          <v-card-text>
-            <v-container> </v-container>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="close"> Fechar </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-data-table>
+
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span>Convidados</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-simple-table dense>
+            <thead>
+              <tr>
+                <th class="text-left">Nomes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in invitedList" :key="item">
+                <td>{{ item }}</td>
+              </tr>
+            </tbody>
+          </v-simple-table>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="close"> Fechar </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -79,10 +98,11 @@ export default {
           text: "Mensagem",
           value: "presenceConfirmedMessage",
         },
-        { text: "Convidados", value: "checkFamily" },
+        { text: "Convidados", value: "checkInvitedList" },
       ],
       totalInvited: null,
       invitations: [],
+      invitedList: [],
       dialog: false,
       isLoading: true,
     };
@@ -103,16 +123,20 @@ export default {
   },
 
   methods: {
-    getFamilySize(family) {
-      return family.length;
-    },
-
     getFamilyName(family) {
       return family[0].name;
     },
 
-    viewFamily() {
-      this.dialog = true;
+    getFamilySize(family) {
+      return family.length;
+    },
+
+    getInvitedList(family) {
+      this.invitedList = [];
+
+      family.forEach((element) => {
+        this.invitedList.push(element.name);
+      });
     },
 
     close() {
