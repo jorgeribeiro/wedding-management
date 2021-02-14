@@ -50,11 +50,13 @@
             <thead>
               <tr>
                 <th class="text-left">Nomes</th>
+                <th class="text-left">Presença confirmada</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in invitedList" :key="item">
-                <td>{{ item }}</td>
+              <tr v-for="item in invitedList" :key="item.name">
+                <td>{{ item.name }}</td>
+                <td>{{ item.presenceConfirmed }}</td>
               </tr>
             </tbody>
           </v-simple-table>
@@ -135,7 +137,10 @@ export default {
       this.invitedList = [];
 
       family.forEach((element) => {
-        this.invitedList.push(element.name);
+        this.invitedList.push({
+          name: element.name,
+          presenceConfirmed: element.presenceConfirmed ? 'Sim' : 'Não',
+        });
       });
     },
 
