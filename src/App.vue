@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app>
       <v-sheet color="#00BFA5" dark class="pa-4">
-        <div>⛪ Jorge & Sammyra</div>
+        <div>⛪ Jorge &amp; Sammyra</div>
       </v-sheet>
 
       <v-divider></v-divider>
