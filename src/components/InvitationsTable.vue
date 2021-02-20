@@ -186,7 +186,8 @@ export default {
         item.invitationCode +
         "*, pedimos que confirme em nosso site até 30 de Abril.\n";
       message +=
-        "Aguardamos a sua presença para celebrar conosco o primeiro dia de nossas vidas!";
+        "Aguardamos a sua presença para celebrar conosco o primeiro dia de nossas vidas!\n\n\n";
+      message += "https://jorgeesammyra.web.app";
 
       this.$copyText(message);
     },
