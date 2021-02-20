@@ -1,7 +1,9 @@
 <template>
   <div>
-    <span>Número de convidados: {{ totalInvited }}</span><br />
-    <span>Número de confirmados: {{ totalConfirmed }}</span><br /><br />
+    <span>Número de convidados: {{ totalInvited }}</span
+    ><br />
+    <span>Número de confirmados: {{ totalConfirmed }}</span
+    ><br /><br />
 
     <v-data-table
       :headers="headers"
@@ -35,6 +37,12 @@
           @click="getInvitedList(item.family)"
         >
           mdi-eye
+        </v-icon>
+      </template>
+
+      <template v-slot:[`item.invitationMessage`]="{ item }">
+        <v-icon small class="mr-2" @click="generateInvitationMessage(item)">
+          mdi-clipboard-outline
         </v-icon>
       </template>
     </v-data-table>
@@ -101,6 +109,7 @@ export default {
           value: "presenceConfirmedMessage",
         },
         { text: "Convidados", value: "checkInvitedList" },
+        { text: "Mensagem para convite", value: "invitationMessage" },
       ],
       totalInvited: null,
       invitations: [],
@@ -136,7 +145,7 @@ export default {
 
     getPresenceConfirmedOnFormatted(presenceConfirmedOn) {
       if (presenceConfirmedOn === null) {
-        return '-';
+        return "-";
       } else {
         return new Date(presenceConfirmedOn._seconds * 1000).toDateString();
       }
@@ -148,9 +157,38 @@ export default {
       family.forEach((element) => {
         this.invitedList.push({
           name: element.name,
-          presenceConfirmed: element.presenceConfirmed ? 'Sim' : 'Não',
+          presenceConfirmed: element.presenceConfirmed ? "Sim" : "Não",
         });
       });
+    },
+
+    generateInvitationMessage(item) {
+      let familyCopy = "você";
+      if (item.family.length > 1) {
+        for (let i = 1; i < item.family.length; i++) {
+          if (i === item.family.length - 1) {
+            familyCopy += " e " + item.family[i].name;
+          } else {
+            familyCopy += ", " + item.family[i].name;
+          }
+        }
+      }
+
+      let message = "Olá " + item.family[0].name + "!\n";
+      message +=
+        "É com imensa alegria que estamos aqui para convidar " +
+        familyCopy +
+        " para o momento mais especial de nossas vidas: a celebração do nosso matrimônio.";
+      message +=
+        "Acontecerá dia *5 de Junho de 2021*, às 18hr 30min na Igreja de São José Operário no Ipase, e logo após, recepcionaremos na Casa Vanni Eventos.\n";
+      message +=
+        "O código do seu convite é *" +
+        item.invitationCode +
+        "*, pedimos que confirme em nosso site até 30 de Abril.\n";
+      message +=
+        "Aguardamos a sua presença para celebrar conosco o primeiro dia de nossas vidas!";
+
+      this.$copyText(message);
     },
 
     close() {
