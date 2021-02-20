@@ -20,7 +20,7 @@
       </template>
 
       <template v-slot:[`item.presenceConfirmedOn`]="{ item }">
-        {{ item.presenceConfirmedOn | formatNull }}
+        {{ getPresenceConfirmedOnFormatted(item.presenceConfirmedOn) }}
       </template>
 
       <template v-slot:[`item.presenceConfirmedMessage`]="{ item }">
@@ -131,6 +131,14 @@ export default {
 
     getFamilySize(family) {
       return family.length;
+    },
+
+    getPresenceConfirmedOnFormatted(presenceConfirmedOn) {
+      if (presenceConfirmedOn === null) {
+        return '-';
+      } else {
+        return new Date(presenceConfirmedOn._seconds * 1000).toDateString();
+      }
     },
 
     getInvitedList(family) {
