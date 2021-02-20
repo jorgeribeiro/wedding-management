@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span>Número total de convidados: {{ totalInvited }}</span
-    ><br /><br />
+    <span>Número de convidados: {{ totalInvited }}</span><br />
+    <span>Número de confirmados: {{ totalConfirmed }}</span><br /><br />
 
     <v-data-table
       :headers="headers"
@@ -113,6 +113,7 @@ export default {
   created() {
     axios.get(process.env.VUE_APP_API_URL + "/invitations").then((response) => {
       this.totalInvited = response.data.totalInvited;
+      this.totalConfirmed = response.data.totalConfirmed;
       this.invitations = response.data.invitations;
       this.isLoading = false;
     });
