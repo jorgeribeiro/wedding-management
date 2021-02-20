@@ -178,7 +178,7 @@ export default {
       message +=
         "É com imensa alegria que estamos aqui para convidar " +
         familyCopy +
-        " para o momento mais especial de nossas vidas: a celebração do nosso matrimônio.";
+        " para o momento mais especial de nossas vidas: a celebração do nosso matrimônio.\n";
       message +=
         "Acontecerá dia *5 de Junho de 2021*, às 18hr 30min na Igreja de São José Operário no Ipase, e logo após, recepcionaremos na Casa Vanni Eventos.\n";
       message +=
