@@ -180,7 +180,7 @@ export default {
         familyCopy +
         " para o momento mais especial de nossas vidas: a celebração do nosso matrimônio.\n";
       message +=
-        "Acontecerá dia *5 de Junho de 2021*, às 18hr 30min na Igreja de São José Operário no Ipase, e logo após, recepcionaremos na Casa Vanni Eventos.\n";
+        "Acontecerá dia *4 de Junho de 2022*, às 18hr 30min na Igreja de São José Operário no Ipase, e logo após, recepcionaremos na Casa Vanni Eventos.\n";
       message +=
         "O código do seu convite é *" +
         item.invitationCode +
